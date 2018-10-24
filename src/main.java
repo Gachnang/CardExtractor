@@ -29,8 +29,8 @@ public class main {
             }
 
             csv = null;
-            json = new CardJsonWriter("newWalhalla.json");
-            fire = null; //new CardFirebaseWriter("fowtest-f30af-service-account.json");
+            json = null; //new CardJsonWriter("newWalhalla.json");
+            fire = new CardFirebaseWriter("fowtest-f30af-service-account.json");
 
             CardListRequest cardListRequest = new CardListRequest();
             List<CardRequest> cardRequests = null;
@@ -52,7 +52,7 @@ public class main {
                     if (json != null) {
                         json.append(cardRaws.get(i));
                     }
-                    if(fire != null) {
+                    if (fire != null) {
                         long time = fire.append(cardRaws.get(i));
                         System.out.println("   [" + i + "]:{" + Long.toString(time) + "} \"" + cardRaws.get(i).name.de + "\" | \"" +
                                 cardRaws.get(i).name.en + "\"");

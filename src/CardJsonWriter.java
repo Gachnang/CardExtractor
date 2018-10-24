@@ -44,31 +44,31 @@ public class CardJsonWriter {
         obj.put("idStr", card.idStr);
         obj.put("name", new JSONObject().put("en", card.name.en).put("de", card.name.de));
 
-        obj.put("edition", card.edition);
+        obj.put("editionId", card.editionId);
 
-        if (card.type != null) {
+        if (card.typeIds != null) {
             JSONArray type = new JSONArray();
-            card.type.forEach(t -> type.put(t));
+            card.typeIds.forEach(t -> type.put(t));
             obj.put("type", type);
         }
 
-        if (card.race != null) {
+        if (card.raceIds != null) {
             JSONArray race = new JSONArray();
-            card.race.forEach(t -> race.put(t));
-            obj.put("race", race);
+            card.raceIds.forEach(t -> race.put(t));
+            obj.put("raceIds", race);
         }
 
-        if (card.attribute != null) {
+        if (card.attributeIds != null) {
             JSONArray attribute = new JSONArray();
-            card.attribute.forEach(t -> attribute.put(t));
-            obj.put("attribute", attribute);
+            card.attributeIds.forEach(t -> attribute.put(t));
+            obj.put("attributeIds", attribute);
         }
 
         if (card.ability != null) {
             JSONArray ability = new JSONArray();
             card.ability.forEach(t -> {
                 JSONObject abilityObj = new JSONObject();
-                abilityObj.put("type", t.type);
+                abilityObj.put("type", t.typeId);
                 if (t.value != null) {
                     abilityObj.put("value", new JSONObject().put("en", t.value.en).put("de", t.value.de));
                 }
@@ -77,7 +77,7 @@ public class CardJsonWriter {
                     JSONArray cost = new JSONArray();
                     t.cost.forEach(c -> {
                         JSONObject costObj = new JSONObject();
-                        costObj.put("type", c.type);
+                        costObj.put("type", c.typeId);
                         costObj.put("count", c.count);
                         cost.put(costObj);
                     });
@@ -93,7 +93,7 @@ public class CardJsonWriter {
             JSONArray cost = new JSONArray();
             card.cost.forEach(c -> {
                 JSONObject costObj = new JSONObject();
-                costObj.put("type", c.type);
+                costObj.put("type", c.typeId);
                 costObj.put("count", c.count);
                 cost.put(costObj);
             });
@@ -107,7 +107,7 @@ public class CardJsonWriter {
         obj.put("rarity", card.rarity);
         obj.put("atk", card.atk);
         obj.put("def", card.def);
-        obj.put("imageUrl", card.imageUrl);
+        obj.put("imageSrcUrl", card.imageSrcUrl);
 
         appendString(obj.toString(1));
 
@@ -122,17 +122,17 @@ public class CardJsonWriter {
         obj.put("idNumeric", cardRaw.idNumeric);
         obj.put("idStr", cardRaw.idStr);
         obj.put("name", new JSONObject().put("en", cardRaw.name.en).put("de", cardRaw.name.de));
-        obj.put("edition", new JSONObject().put("en", cardRaw.edition.en).put("de", cardRaw.edition.de));
-        obj.put("type", new JSONObject().put("en", cardRaw.type.en).put("de", cardRaw.type.de));
-        obj.put("race", new JSONObject().put("en", cardRaw.race.en).put("de", cardRaw.race.de));
-        obj.put("attribute", new JSONObject().put("en", cardRaw.attribute.en).put("de", cardRaw.attribute.de));
+        obj.put("editionId", new JSONObject().put("en", cardRaw.editionId.en).put("de", cardRaw.editionId.de));
+        obj.put("typeIds", new JSONObject().put("en", cardRaw.typeIds.en).put("de", cardRaw.typeIds.de));
+        obj.put("raceIds", new JSONObject().put("en", cardRaw.raceIds.en).put("de", cardRaw.raceIds.de));
+        obj.put("attributeIds", new JSONObject().put("en", cardRaw.attributeIds.en).put("de", cardRaw.attributeIds.de));
         obj.put("ability", new JSONObject().put("en", cardRaw.ability.en).put("de", cardRaw.ability.de));
         obj.put("flavor", new JSONObject().put("en", cardRaw.flavor.en).put("de", cardRaw.flavor.de));
         obj.put("rarity", cardRaw.rarity);
         obj.put("cost", cardRaw.cost);
         obj.put("atk", cardRaw.atk);
         obj.put("def", cardRaw.def);
-        obj.put("imageUrl", cardRaw.imageUrl);
+        obj.put("imageSrcUrl", cardRaw.imageSrcUrl);
 
         appendString(obj.toString(1));
 

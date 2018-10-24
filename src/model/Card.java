@@ -14,24 +14,27 @@ public class Card implements Serializable {
     public List<CardAbilityPropEntry> ability;
 
     public String rarity;
-    public String imageUrl;
+    public String imageSrcUrl;
+    public String imageStorageUrl;
 
     public List<CardCostProp> cost;
-    public int atk;
-    public int def;
+    public Integer atk;
+    public Integer def;
 
-    public Integer edition;
+    public Integer editionId;
 
-    public List<Integer> type;
-    public List<Integer> race;
-    public List<Integer> attribute;
+    public List<Integer> typeIds;
+    public List<Integer> raceIds;
+    public List<Integer> attributeIds;
+
+    public float avgRating = (float) 0.0;
 
     public Card() {
         /*
         name = new MultiLanguageString();
         flavor = new MultiLanguageString();
-        type = new ArrayList<>();
-        race = new ArrayList<>();
-        attribute = new ArrayList<>();*/
+        typeIds = new ArrayList<>();
+        raceIds = new ArrayList<>();
+        attributeIds = new ArrayList<>();*/
     }
 }

@@ -25,23 +25,24 @@ public class ModelHelper {
         cardAttribute = new ArrayList<>();
         cardAbilityType = new ArrayList<>();
 
+
         cardAbilityType.add(new CardSimpleProp(){{
             id = 0;
             value = new MultiLanguageString("Always", "Dauerhaft");
         }});
         cardAbilityType.add(new CardSimpleProp(){{
             id = 1;
-            value = new MultiLanguageString("Resting", "Ausruhen");
+            value = CardAbilityTypeRest; //new MultiLanguageString("Resting", "Ausruhen");
         }});
         cardAbilityType.add(new CardSimpleProp(){{
             id = 2;
-            value = new MultiLanguageString("Activate", "Aktiviert");
+            value = CardAbilityTypeActivate; // new MultiLanguageString("Activate", "Aktiviert");
         }});
     }
 
     private static MultiLanguageString CardAbilityTypeRest = new MultiLanguageString("Resting", "Ausruhen");
     private static MultiLanguageString CardAbilityTypeActivate = new MultiLanguageString("Activate", "Aktiviert");
-    private static MultiLanguageString CardAttributNone = new MultiLanguageString("No attribute", "Ohne Attribut");
+    private static MultiLanguageString CardAttributNone = new MultiLanguageString("No attributeIds", "Ohne Attribut");
 
     Integer cardProp(MultiLanguageString valuee, List<CardSimpleProp> src) {
         CardSimpleProp ret;
@@ -205,10 +206,10 @@ public class ModelHelper {
         Matcher mCost = pCost.matcher(c.en);
         while (mCost.find()) {
             int typeInt = Integer.parseInt(mCost.group(1));
-            List<CardCostProp> already = ret.stream().filter(r -> r.type == typeInt).collect(Collectors.toList());
+            List<CardCostProp> already = ret.stream().filter(r -> r.typeId == typeInt).collect(Collectors.toList());
             if (already.size() == 0) {
                 ret.add(new CardCostProp() {{
-                    type = typeInt;
+                    typeId = typeInt;
                     count = 1;
                 }});
             } else {
@@ -250,13 +251,13 @@ public class ModelHelper {
         for (int i = 0; i < entries_en.length; i++) {
             if (entries_en[i] != null && entries_en[i].length() > 0) {
                 CardAbilityPropEntry prop = new CardAbilityPropEntry() {{
-                    type = 0;
+                    typeId = 0;
                 }};
 
                 Pattern pAbility = Pattern.compile("\\{\\{Ability:(\\d+)\\}\\}");
                 Matcher mAbility = pAbility.matcher(entries_en[i]);
                 if (mAbility.find() && mAbility.start() == 0) {
-                    prop.type = Integer.parseInt(mAbility.group(1));
+                    prop.typeId = Integer.parseInt(mAbility.group(1));
                     entries_en[i] = entries_en[i].replace(mAbility.group(0), "").trim();
                     entries_de[i] = entries_de[i].replace(mAbility.group(0), "").trim();
                 }
@@ -264,7 +265,7 @@ public class ModelHelper {
                 Pattern pAttribute = Pattern.compile("\\{\\{Attribute:(\\d+)\\}\\}");
                 Matcher mAttribute = pAttribute.matcher(entries_en[i]);
                 if (mAttribute.find() && mAttribute.start() == 0) {
-                    prop.type = cardAbilityType(CardAbilityTypeActivate);
+                    prop.typeId = cardAbilityType(CardAbilityTypeActivate);
                     prop.cost = processCardCost(entries_en[i]);
                     do {
                         entries_en[i] = entries_en[i].replace(mAttribute.group(0), "").trim();
@@ -290,7 +291,7 @@ public class ModelHelper {
             idNumeric = raw.idNumeric;
             idStr = raw.idStr;
             rarity = raw.rarity;
-            imageUrl = raw.imageUrl;
+            imageSrcUrl = raw.imageUrl;
             name = raw.name;
             atk = raw.atk;
             def = raw.def;
@@ -307,24 +308,24 @@ public class ModelHelper {
             card.flavor = null;
         }
 
-        card.edition = cardEdition(raw.edition);
+        card.editionId = cardEdition(raw.edition);
 
-        card.type = new ArrayList<>();
-        extractValue(raw.type.en, raw.type.de).forEach(t -> card.type.add(cardType(t)));
-        if (card.type.stream().noneMatch(Objects::nonNull)) {
-            card.type = null;
+        card.typeIds = new ArrayList<>();
+        extractValue(raw.type.en, raw.type.de).forEach(t -> card.typeIds.add(cardType(t)));
+        if (card.typeIds.stream().noneMatch(Objects::nonNull)) {
+            card.typeIds = null;
         }
 
-        card.race = new ArrayList<>();
-        extractValue(raw.race.en, raw.race.de).forEach(t -> card.race.add(cardRace(t)));
-        if (card.race.stream().noneMatch(Objects::nonNull)) {
-            card.race = null;
+        card.raceIds = new ArrayList<>();
+        extractValue(raw.race.en, raw.race.de).forEach(t -> card.raceIds.add(cardRace(t)));
+        if (card.raceIds.stream().noneMatch(Objects::nonNull)) {
+            card.raceIds = null;
         }
 
-        card.attribute = new ArrayList<>();
-        extractValue(raw.attribute.en, raw.attribute.de).forEach(t -> card.attribute.add(cardAttribute(t)));
-        if (card.attribute.stream().noneMatch(Objects::nonNull)) {
-            card.attribute = null;
+        card.attributeIds = new ArrayList<>();
+        extractValue(raw.attribute.en, raw.attribute.de).forEach(t -> card.attributeIds.add(cardAttribute(t)));
+        if (card.attributeIds.stream().noneMatch(Objects::nonNull)) {
+            card.attributeIds = null;
         }
 
         if (raw.ability.en.length() > 0 || raw.ability.de.length() > 0) {

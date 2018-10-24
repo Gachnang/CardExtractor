@@ -24,7 +24,7 @@ public class CardCsvWriter {
     }
 
     private void appendHeader() throws IOException {
-        appendString("idNumeric;idStr;name_en;name_de;edition_en;edition_de;type_en;type_de;race_en;race_de;attribute_en;attribute_de;ability_en;ability_de;flavor_en;flavor_de;rarity;cost;atk;dev;imageUrl\n");
+        appendString("idNumeric;idStr;name_en;name_de;edition_en;edition_de;type_en;type_de;race_en;race_de;attribute_en;attribute_de;ability_en;ability_de;flavor_en;flavor_de;rarity;cost;atk;dev;imageSrcUrl\n");
     }
 
     public void append(CardRaw cardRaw) throws IOException {

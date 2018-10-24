@@ -18,6 +18,7 @@ public class CardListRequest {
     public int defMax = 2500;
 
     public String toUrl() {
+        // ?page=&cardname=&block=ALL&edition=ALL&REGATT=or&cardnumber=&ABILITYTEXT=&ATKMIN=0&ATKMAX=2500&DEFMIN=0&DEFMAX=2500&CERCA=cerca
         return new StringBuilder(CardListUrl)
                 .append("?page=").append(this.page)
                 .append("&order=").append(this.order)
@@ -31,6 +32,7 @@ public class CardListRequest {
                 .append("&atkMax=").append(this.atkMax)
                 .append("&defMin=").append(this.defMin)
                 .append("&defMax=").append(this.defMax)
+                .append("&CERCA=cerca")
                 .toString();
     }
 }
