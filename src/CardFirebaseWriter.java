@@ -64,6 +64,7 @@ public class CardFirebaseWriter {
         //if (i++ < 20) {
             Card card = modelHelper.processCardRaw(cardRaw);
             // firestore.append(card);
+            // return 0;
             card.imageStorageUrl = "Cards/" + card.idStr + "_full";
 
             Map<String, Object> cardFields = new HashMap<>();
@@ -135,23 +136,6 @@ public class CardFirebaseWriter {
                 cardFields.put("cost", costs);
             }
 
-        /*
-        Thread  setter = new Thread(() -> {
-            try {
-                long time = database
-                        .collection("Cards")
-                        .document(card.idStr)
-                        .set(cardFields)
-                        .get().getUpdateTime().getSeconds();
-                System.out.println("   {" + Long.toString(time) + "} \"" + card.name.de + "\" | \"" +
-                        card.name.en + "\"");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-        });
-        setter.start();*/
 
             ApiFuture<WriteResult> result =
                     // collection
@@ -163,7 +147,7 @@ public class CardFirebaseWriter {
 
             return result.get().getUpdateTime().getSeconds();
         //}
-        //return 0;
+        //return 0;*/
     }
 
     public void close() throws Exception {

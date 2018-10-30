@@ -18,8 +18,8 @@ public class CardRaw implements Serializable {
     public String imageUrl;
     public String cost;
 
-    public int atk;
-    public int def;
+    public Integer atk;
+    public Integer def;
 
     public CardRaw() {
         name = new MultiLanguageString();

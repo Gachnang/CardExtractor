@@ -128,22 +128,28 @@ public class ModelHelper {
         Pattern pAbility = Pattern.compile("<[^<>]+>([^<>\\d\\/]+)<\\/[^<>]+>");
         Matcher mAbility_en = pAbility.matcher(string.en);
         while (mAbility_en.find()) { // && (mAbility_en.start() == 0 || mAbility_en.group(1).charAt(0) == '\n')) {
-            Matcher mAbility_de = pAbility.matcher(string.de);
-            if (mAbility_de.find()) { // && (mAbility_de.start() == 0 || mAbility_de.group(1).charAt(0) == '\n')) {
-                String replace;
+            if (mAbility_en.group(0).toLowerCase().equals("rest")) {
+                String replace = "{{Ability:" + cardAbilityType(CardAbilityTypeRest) + "}}";
+                string.en = string.en.replace(mRest.group(0), replace);
+                string.de = string.de.replace(mRest.group(0), replace);
+            } else {
+                Matcher mAbility_de = pAbility.matcher(string.de);
+                if (mAbility_de.find()) { // && (mAbility_de.start() == 0 || mAbility_de.group(1).charAt(0) == '\n')) {
+                    String replace;
 
-                List<CardSimpleProp> types = cardTypes.stream().filter(t -> t.value.en.equals(mAbility_en.group(1))).collect(Collectors.toList());
-                if (types.size() > 0) {
-                    replace = "{{Type:" + types.get(0).id + "}}";
-                } else {
-                    replace = "{{Ability:" + cardAbilityType(new MultiLanguageString(
-                            mAbility_en.group(1),
-                            mAbility_de.group(1)
-                    )).toString() + "}}";
+                    List<CardSimpleProp> types = cardTypes.stream().filter(t -> t.value.en.equals(mAbility_en.group(1))).collect(Collectors.toList());
+                    if (types.size() > 0) {
+                        replace = "{{Type:" + types.get(0).id + "}}";
+                    } else {
+                        replace = "{{Ability:" + cardAbilityType(new MultiLanguageString(
+                                mAbility_en.group(1),
+                                mAbility_de.group(1)
+                        )).toString() + "}}";
+                    }
+
+                    string.en = string.en.replace(mAbility_en.group(0), replace).trim();
+                    string.de = string.de.replace(mAbility_de.group(0), replace).trim();
                 }
-
-                string.en = string.en.replace(mAbility_en.group(0), replace).trim();
-                string.de = string.de.replace(mAbility_de.group(0), replace).trim();
             }
         }
 
